@@ -4,7 +4,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'brain.dart';
 
-
 QuizBrain quizBrain = QuizBrain();
 
 void main() => runApp(Quizzler());
@@ -42,9 +41,7 @@ class _QuizPageState extends State<QuizPage> {
       if (quizBrain.isFinished() == true) {
         quizBrain.reset();
         scoreKeeper = [];
-      }
-
-      else {
+      } else {
         if (userPickedAnswer == correctAnswer) {
           scoreKeeper.add(Icon(
             Icons.check,
@@ -62,24 +59,14 @@ class _QuizPageState extends State<QuizPage> {
       }
     });
   }
-  Widget addClickedNumber(clickedNumber) {
-    setState(() {
-      Text(
-        "$clickedNumber",
-        textAlign: TextAlign.center,
-        style: TextStyle(
-          fontSize: 50.0,
-          fontWeight: FontWeight.bold,
-          color: Colors.white,
-        ),
-      );
-    });
-  }
+
   @override
   Widget build(BuildContext context) {
     return DecoratedBox(
       decoration: BoxDecoration(
-        image: DecorationImage(image: AssetImage("assets/mathGame1assets/fone.jpg"), fit: BoxFit.cover),
+        image: DecorationImage(
+            image: AssetImage("assets/mathGame1assets/fone.jpg"),
+            fit: BoxFit.cover),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -88,7 +75,7 @@ class _QuizPageState extends State<QuizPage> {
           Expanded(
             //flex: 5,
             child: Padding(
-              padding: EdgeInsets.only(left:30),
+              padding: EdgeInsets.only(left: 30),
               child: Center(
                 child: Row(
                   children: [
@@ -109,58 +96,41 @@ class _QuizPageState extends State<QuizPage> {
           ),
           Row(
             children: <Widget>[
-
               _images(1),
               _images(2),
               _images(3),
-
             ],
           ),
-
           Row(
             children: <Widget>[
               _images(4),
               _images(5),
               _images(6),
-
-
             ],
           ),
-
           Row(
             children: <Widget>[
               _images(7),
-
               _images(8),
               _images(9),
             ],
           ),
           _images(0),
-          Expanded(
+          Container(
             child: Padding(
-              padding: EdgeInsets.all(5.0),
-              child: FlatButton(
-                color: Colors.green,
-                child: Row(
-                  children: [
-                    Text(
-                      'Ստուգել',
-                      style: TextStyle(
-                        fontSize: 45.0,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    ),
-                    addClickedNumber(answer)
-                  ],
-                ),
-                onPressed: () {
-                  //The user picked false.
-                  checkAnswer(answer);
-                  answer="";
-                },
-              ),
-            ),
+                padding: EdgeInsets.only(left: 40, right: 40),
+                child: FloatingActionButton.extended(
+                  onPressed: () {
+                    setState(() {
+                      checkAnswer(answer);
+                      answer = "";
+                    });
+                  },
+                  label: const Text('Ստուգել',
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.bold)),
+                  backgroundColor: Colors.green,
+                )),
           ),
           Padding(
             padding: const EdgeInsets.all(0),
@@ -173,8 +143,7 @@ class _QuizPageState extends State<QuizPage> {
     );
   }
 
-  Widget _images(int imageIndex) =>
-      Expanded(
+  Widget _images(int imageIndex) => Expanded(
         child: Padding(
           padding: EdgeInsets.only(bottom: 2),
           child: FlatButton(
@@ -182,7 +151,9 @@ class _QuizPageState extends State<QuizPage> {
             //color: Colors.green,
             child: Image.asset('assets/mathGame1assets/num$imageIndex.jpg'),
             onPressed: () {
-              answer += "$imageIndex";
+              setState(() {
+                answer += "$imageIndex";
+              });
             },
           ),
         ),
